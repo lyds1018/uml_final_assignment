@@ -225,10 +225,21 @@
   },
   "active": "506825dc0c94765d",
   "lastOpenFiles": [
-    "java_plan ✅.md",
-    "detailed_design.md",
+    "README.md",
+    "frontend/index.html",
+    "frontend",
+    "backend/target/classes/com/shop/controller/OrderController.class",
+    "backend/src/main/java/com/shop/controller/OrderController.java",
+    "backend/target/classes/com/shop/controller/CartController.class",
+    "backend/src/main/java/com/shop/controller/CartController.java",
+    "backend/target/classes/com/shop/controller/UserController.class",
+    "backend/target/classes/com/shop/controller/ProductController.class",
+    "backend/target/classes/com/shop/controller",
+    "backend/src/main/java/com/shop/controller/ProductController.java",
     "summary_design.md",
     "demand_analysis.md",
+    "java_plan ✅.md",
+    "detailed_design.md",
     "python_plan.md",
     "implementation_plan.md"
   ]
