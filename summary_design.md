@@ -174,7 +174,7 @@ class Order {
   +userId: Long
   +totalPrice: Double
   +status: String
-  +createTime: Date
+  +createTime: LocalDateTime
 }
 
 class OrderItem {
@@ -194,5 +194,4 @@ Product "1" -- "0..*" CartItem : included in
 Product "1" -- "0..*" OrderItem : included in
 
 @enduml
-
 ```
