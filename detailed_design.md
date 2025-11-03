@@ -31,21 +31,74 @@
 ```plantuml
 @startuml
 actor User
-participant "前端 (Vue)" as Frontend
-participant "CartController" as CartCtrl
-participant "CartService" as CartSvc
-participant "OrderService" as OrderSvc
-participant "OrderRepository (JPA)" as OrderRepo
+participant OrderController
+participant OrderService
+participant PaymentService
+participant CartService
+database OrderRepository
+database CartRepository
 
-User -> Frontend : 选择购物车商品并点击“结算”
-Frontend -> CartCtrl : 提交下单请求 (Axios)
-CartCtrl -> CartSvc : validateCart(userId)
-CartSvc -> OrderSvc : createOrder(userId, cartItems)
-OrderSvc -> OrderRepo : 保存订单到数据库
-OrderRepo --> OrderSvc : 返回订单对象
-OrderSvc --> CartSvc : 清空购物车
-CartSvc --> CartCtrl : 返回订单信息
-CartCtrl --> Frontend : 返回订单确认信息
-Frontend --> User : 显示订单确认页面
+User -> OrderController : 提交订单（来自购物车）
+OrderController -> OrderService : createPendingOrder(userId)
+OrderService -> CartService : getActiveCartItems(userId)
+CartService --> OrderService : 返回商品列表
+OrderService -> OrderService : 校验库存
+OrderService -> OrderRepository : 保存订单（status=PENDING）
+OrderRepository --> OrderService : 返回订单
+OrderService --> OrderController : 返回支付链接/订单ID
+OrderController --> User : 跳转至支付页面
+
+User -> PaymentService : 确认支付
+PaymentService -> OrderService : notifyPaymentSuccess(orderId)
+OrderService -> OrderRepository : 更新订单状态为 PAID
+OrderService -> OrderService : 扣减商品库存
+OrderService -> CartService : removeItemsFromCart(userId, orderItems)
+CartService -> CartRepository : 删除已购商品项
+CartRepository --> CartService : 
+CartService --> OrderService : 
+OrderService --> PaymentService : 返回处理成功
+PaymentService --> User : 支付成功，跳转订单详情页
 @enduml
+```
+
+---
+
+## 四、活动图 —— 订单支付流程
+
+```plantuml
+@startuml
+start
+:用户查看订单;
+:点击支付;
+if (支付成功?) then (yes)
+  :订单状态更新为已支付;
+  :通知商家发货;
+  :订单状态更新为已发货;
+else (no)
+  :订单状态更新为已取消;
+endif
+:用户确认收货;
+:订单状态更新为已完成;
+stop
+@enduml改成居中
+```
+
+---
+
+## 五、状态图 —— 订单状态流转
+
+```plantuml
+@startuml
+[*] --> Pending
+
+Pending --> Paid : 支付成功
+Pending --> Cancelled : 用户取消
+
+Paid --> Shipping : 商家发货
+Shipping --> Completed : 用户确认收货
+
+Completed --> [*]
+Cancelled --> [*]
+@enduml
+
 ```
