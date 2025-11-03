@@ -2,11 +2,11 @@
 
 ## 一、目录结构
 
-### 1. `backend/` — 后端 Spring Boot 
+### 1. `backend/` —  后端 Spring Boot 
 - `src/main/java/com/shop/...` — Java 源码（控制器、服务、模型、拦截器等）
 - `src/main/resources/application.yml` — 配置文件
 
-### 2. `frontend/` — 前端 Vue 3 + Vite 
+### 2. `frontend/` —  前端 Vue 3 + Vite 
 - `src/` — Vue 源码（`App.vue`、`router.js`、`pages/`）
 
 ---
