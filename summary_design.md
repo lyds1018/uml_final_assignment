@@ -64,6 +64,110 @@
 
 ---
 
-## 三、包图设计（包结构）
+## 三、包图设计
 
-推荐的包结构如下：
+```plantuml
+@startuml package_structure
+package "com.shop.controller" {
+  class UserController
+  class ProductController
+  class CartController
+  class OrderController
+  class AdminController
+}
+
+package "com.shop.service" {
+  class UserService
+  class ProductService
+  class CartService
+  class OrderService
+  class AdminService
+}
+
+package "com.shop.repository" {
+  class UserRepository
+  class ProductRepository
+  class CartRepository
+  class OrderRepository
+}
+
+package "com.shop.model" {
+  class User
+  class Product
+  class Cart
+  class CartItem
+  class Order
+  class OrderItem
+}
+
+package "com.shop.dto" {
+  class ResponseDTO
+}
+
+package "com.shop.util" {
+  class FileUploadUtil
+}
+
+package "com.shop.exception" {
+  class GlobalExceptionHandler
+}
+@enduml
+```
+
+## 四、 类图设计
+
+```plantuml
+@startuml class_diagram
+class User {
+  +id: Long
+  +username: String
+  +password: String
+  +email: String
+  +role: String
+}
+
+class Product {
+  +id: Long
+  +name: String
+  +price: Double
+  +stock: Integer
+  +category: String
+}
+
+class Cart {
+  +id: Long
+  +userId: Long
+}
+
+class CartItem {
+  +id: Long
+  +cartId: Long
+  +productId: Long
+  +quantity: Integer
+}
+
+class Order {
+  +id: Long
+  +userId: Long
+  +totalPrice: Double
+  +status: String
+  +createTime: Date
+}
+
+class OrderItem {
+  +id: Long
+  +orderId: Long
+  +productId: Long
+  +quantity: Integer
+  +price: Double
+}
+
+User "1" -- "0..*" Order
+User "1" -- "0..*" Cart
+Cart "1" -- "0..*" CartItem
+Order "1" -- "0..*" OrderItem
+Product "1" -- "0..*" CartItem
+Product "1" -- "0..*" OrderItem
+
+@enduml
+```
