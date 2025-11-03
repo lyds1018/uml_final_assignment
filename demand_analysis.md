@@ -84,7 +84,7 @@
 | 浏览器  | Chrome / Edge        |
 | 后端环境 | Python 3.10+ / Flask |
 | 数据库  | MySQL                |
-| 工具   | VSCode / StarUML     |
+| 工具   | VSCode / PyCharm     |
 
 ---
 

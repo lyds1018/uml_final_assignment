@@ -35,8 +35,7 @@
               "title": "implementation_plan"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -109,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "implementation_plan.md",
+                "file": "demand_analysis.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -119,7 +118,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "implementation_plan 的反向链接列表"
+              "title": "demand_analysis 的反向链接列表"
             }
           },
           {
@@ -128,12 +127,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "implementation_plan.md",
+                "file": "demand_analysis.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "implementation_plan 的出链列表"
+              "title": "demand_analysis 的出链列表"
             }
           },
           {
@@ -157,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "implementation_plan.md",
+                "file": "demand_analysis.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "implementation_plan 的大纲"
+              "title": "demand_analysis 的大纲"
             }
           },
           {
@@ -195,9 +194,9 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "25a1d35d7fa5c90d",
+  "active": "5aa1915cfa35c5bd",
   "lastOpenFiles": [
-    "demand_analysis.md",
-    "implementation_plan.md"
+    "implementation_plan.md",
+    "demand_analysis.md"
   ]
 }
