@@ -78,18 +78,47 @@
 
 ## 6. 运行环境
 
-| 项目   | 推荐配置                    |
-| ---- | ----------------------- |
-| 操作系统 | Windows                 |
-| 浏览器  | Chrome / Edge / Firefox |
-| 后端环境 | Python 3.10+ / Flask    |
-| 数据库  | MySQL                   |
-| 工具   | VSCode / StarUML        |
+| 项目   | 推荐配置                 |
+| ---- | -------------------- |
+| 操作系统 | Windows              |
+| 浏览器  | Chrome / Edge        |
+| 后端环境 | Python 3.10+ / Flask |
+| 数据库  | MySQL                |
+| 工具   | VSCode / StarUML     |
 
 ---
 
 ## 7. 系统用例图
 ```plantuml
+@startuml
+' 设置左右布局
+left to right direction
 
+' 定义角色位置（左侧普通用户，右侧管理员）
+actor "普通用户（顾客）" as Customer
+actor "管理员" as Admin
+
+rectangle "简易在线购物系统" {
+    ' 普通用户用例（左侧角色关联左侧用例）
+    Customer -- (用户注册)
+    Customer -- (用户登录)
+    Customer -- (浏览商品)
+    Customer -- (搜索商品)
+    Customer -- (添加商品至购物车)
+    Customer -- (修改购物车商品数量)
+    Customer -- (删除购物车商品)
+    Customer -- (提交订单)
+    Customer -- (模拟支付)
+    Customer -- (查看订单)
+    
+    ' 管理员用例（右侧角色关联右侧用例）
+    (管理员登录) -- Admin
+    (新增商品) -- Admin
+    (修改商品信息) -- Admin
+    (删除商品) -- Admin
+    (查看所有订单) -- Admin
+    (更新订单发货状态) -- Admin
+}
+@enduml
 ```
 
