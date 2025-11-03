@@ -11,6 +11,7 @@ docker compose up -d --build
 ```
 
 服务启动后：
+- 前端接口：http://localhost:3000
 - 后端接口：http://localhost:8080
 - 前端静态页：直接用浏览器打开 `frontend/index.html`
 

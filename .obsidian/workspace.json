@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "detailed_design.md",
+                "file": "README.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "detailed_design"
+              "title": "README"
             }
           },
           {
@@ -225,6 +225,7 @@
   },
   "active": "506825dc0c94765d",
   "lastOpenFiles": [
+    "detailed_design.md",
     "README.md",
     "frontend/index.html",
     "frontend",
@@ -239,7 +240,6 @@
     "summary_design.md",
     "demand_analysis.md",
     "java_plan ✅.md",
-    "detailed_design.md",
     "python_plan.md",
     "implementation_plan.md"
   ]
