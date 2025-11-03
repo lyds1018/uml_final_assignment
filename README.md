@@ -2,20 +2,9 @@
 
 基于 Spring Boot 3 (JDK 17) + MySQL 的后端与最简前端（Vue CDN）示例，实现商品、购物车、下单、支付（模拟）与订单查询等核心流程。
 
-## 运行方式
+## 运行方式（本地内网，无 Docker）
 
-1) 使用 Docker 一键启动（推荐）
-
-```bash
-docker compose up -d --build
-```
-
-服务启动后：
-- 前端接口：http://localhost:3000
-- 后端接口：http://localhost:8080
-- 前端静态页：直接用浏览器打开 `frontend/index.html`
-
-2) 本地启动后端
+1) 本地启动后端
 
 - 安装并启动 MySQL 8，本地创建数据库 `shopdb`，账号密码与 `backend/src/main/resources/application.yml` 保持一致（默认 root/root）。
 - 进入 `backend` 目录，执行：
@@ -23,6 +12,29 @@ docker compose up -d --build
 ```bash
 mvn spring-boot:run
 ```
+
+2) 本地启动前端（开发模式）
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+打开：`http://localhost:5173`（已代理 `/api` 到 `http://localhost:8080`）
+
+3) 本地预览构建产物
+
+```bash
+cd frontend
+npm install
+npm run build
+npm run preview
+```
+
+打开：`http://localhost:4173`
+
+更多详情见 `LOCAL_SETUP.md`。
 
 ## 主要接口
 
