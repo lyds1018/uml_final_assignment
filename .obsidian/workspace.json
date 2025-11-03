@@ -35,7 +35,8 @@
               "title": "implementation_plan"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -108,7 +109,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "demand_analysis.md",
+                "file": "implementation_plan.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -118,7 +119,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "demand_analysis 的反向链接列表"
+              "title": "implementation_plan 的反向链接列表"
             }
           },
           {
@@ -127,12 +128,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "demand_analysis.md",
+                "file": "implementation_plan.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "demand_analysis 的出链列表"
+              "title": "implementation_plan 的出链列表"
             }
           },
           {
@@ -156,13 +157,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "demand_analysis.md",
+                "file": "implementation_plan.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "demand_analysis 的大纲"
+              "title": "implementation_plan 的大纲"
             }
           },
           {
@@ -194,9 +195,9 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "5aa1915cfa35c5bd",
+  "active": "25a1d35d7fa5c90d",
   "lastOpenFiles": [
-    "implementation_plan.md",
-    "demand_analysis.md"
+    "demand_analysis.md",
+    "implementation_plan.md"
   ]
 }

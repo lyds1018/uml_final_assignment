@@ -22,9 +22,6 @@
   - 实现商品展示、表单提交、分页与搜索 
 - **数据库设计**
   - MySQL 
-- **安全性**
-  - 使用 bcrypt 或 Django auth 模块加密密码 
-  - 通过 session / JWT 管理登录态 
 - **测试与部署**
   - 单元测试：unittest / pytest 
   - 部署：Docker 
