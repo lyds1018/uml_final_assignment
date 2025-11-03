@@ -73,14 +73,6 @@
         
     - `docker-compose.yml` 启动 Flask + MySQL + Vue 前端
         
-- 优点：
-    
-    - 一键部署
-        
-    - 环境一致性
-        
-    - 可在服务器上轻松运行
-        
 
 ---
 
