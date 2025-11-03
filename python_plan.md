@@ -59,12 +59,11 @@
 - 作用：将 Python 类映射为数据库表，避免手写 SQL
     
 - 模型示例：
-    
  ```Python
  class User(db.Model):
-	 id = db.Column(db.Integer, primary_key=True)  
-     username = db.Column(db.String(50), unique=True, nullable=False)
-     password = db.Column(db.String(128), nullable=False)
+	 id = db.Column(db.Integer, primary_key=True)
+	 username = db.Column(db.String(50), unique=True, nullable=False)
+	 password = db.Column(db.String(128), nullable=False)
  ```
 ### 5. 部署（Docker）
 
