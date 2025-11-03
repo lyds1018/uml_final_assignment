@@ -1,49 +1,65 @@
-# 简易在线购物系统
+# 本仓库是一个简易在线购物系统
 
-基于 Spring Boot 3 (JDK 17) + MySQL 的后端与最简前端（Vue CDN）示例，实现商品、购物车、下单、支付（模拟）与订单查询等核心流程。
+## 一、目录结构
 
-## 运行方式（本地内网，无 Docker）
+### 1. `backend/` — 后端 Spring Boot 
+- `src/main/java/com/shop/...` — Java 源码（控制器、服务、模型、拦截器等）
+- `src/main/resources/application.yml` — 配置文件
 
-1) 本地启动后端（同时提供前端静态页）
+### 2. `frontend/` — 前端 Vue 3 + Vite 
+- `src/` — Vue 源码（`App.vue`、`router.js`、`pages/`）
 
-- 安装并启动 MySQL 8，本地创建数据库 `shopdb`，账号密码与 `backend/src/main/resources/application.yml` 保持一致
-- 进入 `backend` 目录，执行：
+---
 
-```bash
+## 二、运行环境
+
+- Java 17（或兼容的 JDK 17）
+- Maven 3.x
+- Node.js 18+ 与 npm
+- MySQL：项目使用 Spring Data JPA，默认为内存或 application.yml 指定的数据源。
+
+在 Windows PowerShell 下安装/检查示例：
+
+```powershell
+# 检查 Java
+java -version
+
+# 检查 Maven
+mvn -v
+
+# 检查 Node/npm
+node -v
+npm -v
+```
+
+---
+
+## 三、运行步骤
+
+### 1. 后端配置: `backend/src/main/resources/application.yml`
+- `spring.datasource`：数据库连接配置
+- `jwt.secret`：JWT 签名密钥
+
+### 2. 启动后端服务
+
+```shell
+cd ..\backend
+mvn clean package
 mvn spring-boot:run
 ```
 
-2) 前端访问
+### 3. 启动前端服务
 
-- 打开：`http://localhost:8080/`
+```shell
+cd ..\frontend
+npm install
+npm run dev
+```
 
-更多细节见 `LOCAL_SETUP.md`。
+---
 
-## 主要接口
+## PS: 默认管理员账号
 
-- 用户
-  - POST `/api/users/register` {username,email,password}
-  - POST `/api/users/login` {username,password}
-- 商品
-  - GET `/api/products`
-  - POST `/api/products`
-  - PUT `/api/products/{id}`
-  - DELETE `/api/products/{id}`
-- 购物车
-  - GET `/api/cart/{userId}`
-  - POST `/api/cart/{userId}/add` {productId,quantity}
-  - PUT `/api/cart/item/{itemId}` {quantity}
-  - DELETE `/api/cart/item/{itemId}`
-- 订单
-  - POST `/api/orders/create` {userId}
-  - POST `/api/orders/pay` {orderId,userId}
-  - GET `/api/orders/my/{userId}`
-  - PUT `/api/orders/{orderId}/status` {status}
-
-## 注意事项
-
-- 当前登录使用简单接口返回用户信息，未接入完整鉴权（JWT/Session）。
-- `DDL-AUTO=update` 便于演示，生产建议使用迁移工具（Flyway/Liquibase）。
-- 可以在 `frontend/index.html` 直接演示完整购买流程。
-
+- 用户名：`root`
+- 密码（明文）：`041018`
 

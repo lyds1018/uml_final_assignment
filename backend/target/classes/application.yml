@@ -14,9 +14,27 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 
 app:
   security:
+    jwt:
+      # 默认提供一个更长的本地开发用 secret（生产请使用安全存储并保证至少 32 字节）
+      secret: ${JWT_SECRET:change-me-with-32-byte-minimum-secret-key-for-dev}
+      expiration: ${JWT_EXPIRATION:86400000}
     password-encoder-strength: 10
+
+  upload:
+    directory: ${UPLOAD_DIR:uploads}
+    allowed-types: image/jpeg,image/png,image/gif
+    max-file-size: 5242880 # 5MB
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    com.shop: DEBUG
 
 
