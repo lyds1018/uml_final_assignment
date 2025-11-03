@@ -78,13 +78,13 @@
 
 ## 6. 运行环境
 
-| 项目   | 推荐配置                 |
-| ---- | -------------------- |
-| 操作系统 | Windows              |
-| 浏览器  | Chrome / Edge        |
-| 后端环境 | Python 3.10+ / Flask |
-| 数据库  | MySQL                |
-| 工具   | VSCode / PyCharm     |
+| 项目   | 推荐配置             |
+| ---- | ---------------- |
+| 操作系统 | Windows          |
+| 浏览器  | Chrome / Edge    |
+| 后端环境 | Java             |
+| 数据库  | MySQL            |
+| 工具   | VSCode / PyCharm |
 
 ---
 
