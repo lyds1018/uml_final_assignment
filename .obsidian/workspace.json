@@ -49,8 +49,7 @@
               "title": "detailed_design"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -123,7 +122,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "summary_design.md",
+                "file": "demand_analysis.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -133,7 +132,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "summary_design 的反向链接列表"
+              "title": "demand_analysis 的反向链接列表"
             }
           },
           {
@@ -142,12 +141,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "summary_design.md",
+                "file": "demand_analysis.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "summary_design 的出链列表"
+              "title": "demand_analysis 的出链列表"
             }
           },
           {
@@ -171,13 +170,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "summary_design.md",
+                "file": "demand_analysis.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "summary_design 的大纲"
+              "title": "demand_analysis 的大纲"
             }
           },
           {
@@ -209,11 +208,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "9d830d19363b6380",
+  "active": "5aa1915cfa35c5bd",
   "lastOpenFiles": [
     "detailed_design.md",
-    "demand_analysis.md",
     "summary_design.md",
+    "demand_analysis.md",
     "java_plan ✅.md",
     "python_plan.md",
     "implementation_plan.md"
