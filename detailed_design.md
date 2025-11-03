@@ -26,22 +26,26 @@
 
 ---
 
-## 三、时序图（PlantUML）——用户下单
+## 三、时序图（PlantUML）—— 用户下单
 
 ```plantuml
 @startuml
 actor User
+participant "前端 (Vue)" as Frontend
 participant "CartController" as CartCtrl
 participant "CartService" as CartSvc
 participant "OrderService" as OrderSvc
-participant "OrderRepository" as OrderRepo
+participant "OrderRepository (JPA)" as OrderRepo
 
-User -> CartCtrl : 点击结算
+User -> Frontend : 选择购物车商品并点击“结算”
+Frontend -> CartCtrl : 提交下单请求 (Axios)
 CartCtrl -> CartSvc : validateCart(userId)
 CartSvc -> OrderSvc : createOrder(userId, cartItems)
-OrderSvc -> OrderRepo : save(order)
+OrderSvc -> OrderRepo : 保存订单到数据库
 OrderRepo --> OrderSvc : 返回订单对象
 OrderSvc --> CartSvc : 清空购物车
 CartSvc --> CartCtrl : 返回订单信息
-CartCtrl --> User : 显示订单确认
+CartCtrl --> Frontend : 返回订单确认信息
+Frontend --> User : 显示订单确认页面
 @enduml
+```
