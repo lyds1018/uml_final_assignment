@@ -53,7 +53,7 @@ mvn spring-boot:run
 ```shell
 cd ..\frontend
 npm install
-npm run dev
+npm run dev -- --port 3000
 ```
 
 ---
