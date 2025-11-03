@@ -36,23 +36,23 @@
 
 ### 3.2 管理员功能
 
-| 功能模块 | 功能描述 |
-|-----------|-----------|
-| 管理登录 | 管理员账号登录后台 |
-| 商品管理 | 新增、修改、删除商品信息 |
+| 功能模块 | 功能描述          |
+| ---- | ------------- |
+| 管理登录 | 管理员账号登录后台     |
+| 商品管理 | 新增、修改、删除商品信息  |
 | 查看订单 | 查看用户订单，更新发货状态 |
 
 ---
 
 ## 4. 非功能需求分析
 
-| 类别 | 描述 |
-|------|------|
+| 类别   | 描述                      |
+| ---- | ----------------------- |
 | 性能要求 | 系统可在个人电脑上本地运行，响应时间不超过2秒 |
-| 安全性 | 用户需通过登录认证访问个人订单信息 |
-| 可维护性 | 系统结构清晰，模块划分明确，便于后续扩展 |
-| 易用性 | 界面简洁直观，操作流程清晰 |
-| 可移植性 | 系统基于Web架构，可在不同浏览器中运行 |
+| 安全性  | 用户需通过登录认证访问个人订单信息       |
+| 可维护性 | 系统结构清晰，模块划分明确，便于后续扩展    |
+| 易用性  | 界面简洁直观，操作流程清晰           |
+| 可移植性 | 系统基于Web架构，可在不同浏览器中运行    |
 
 ---
 
@@ -60,12 +60,12 @@
 
 ### 5.1 主要数据实体
 
-| 实体名称 | 属性示例 |
-|-----------|-----------|
-| 用户（User） | user_id, username, password, email |
-| 商品（Product） | product_id, name, price, stock, description |
-| 购物车（Cart） | cart_id, user_id, product_id, quantity |
-| 订单（Order） | order_id, user_id, total_price, status, create_time |
+| 实体名称           | 属性示例                                                 |
+| -------------- | ---------------------------------------------------- |
+| 用户（User）       | user_id, username, password, email                   |
+| 商品（Product）    | product_id, name, price, stock, description          |
+| 购物车（Cart）      | cart_id, user_id, product_id, quantity               |
+| 订单（Order）      | order_id, user_id, total_price, status, create_time  |
 | 订单项（OrderItem） | order_item_id, order_id, product_id, quantity, price |
 
 ### 5.2 数据关系
@@ -85,4 +85,11 @@
 | 后端环境 | Python 3.10+ / Flask    |
 | 数据库  | MySQL                   |
 | 工具   | VSCode / StarUML        |
+
+---
+
+## 7. 系统用例图
+```plantuml
+
+```
 
