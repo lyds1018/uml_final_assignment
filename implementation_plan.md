@@ -17,7 +17,7 @@
   - 使用 Flask 构建 REST API 
   - 使用 Flask Blueprint 模块化结构
 - **前端展示**
-  - Flask + Bootstrap / Vue 前端分离 
+  - Flask + Vue 前后端分离 
   - 实现商品展示、表单提交、分页与搜索 
 - **数据库设计**
   - MySQL 
