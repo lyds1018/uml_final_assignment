@@ -139,6 +139,8 @@ package "com.shop.exception" {
 
 ```plantuml
 @startuml class_diagram
+
+' 核心实体类
 class User {
   +id: Long
   +username: String
@@ -183,12 +185,14 @@ class OrderItem {
   +price: Double
 }
 
-User "1" -- "0..*" Order
-User "1" -- "0..*" Cart
-Cart "1" -- "0..*" CartItem
-Order "1" -- "0..*" OrderItem
-Product "1" -- "0..*" CartItem
-Product "1" -- "0..*" OrderItem
+' 核心关系
+User "1" -- "1" Cart : has
+Cart "1" -- "0..*" CartItem : contains
+Order "1" -- "0..*" OrderItem : contains
+User "1" -- "0..*" Order : places
+Product "1" -- "0..*" CartItem : included in
+Product "1" -- "0..*" OrderItem : included in
 
 @enduml
+
 ```
