@@ -14,14 +14,14 @@
 
 ## 2. Python 技术需求
 - **后端开发**
-  - 使用 Flask 构建 RESTful API 
-  - ORM 管理数据库实体 
-  - Flask 使用 Blueprint 
+  - 使用 Flask 构建 REST API 
+  - 使用Flask Blueprint 模块化结构
 - **前端展示**
   - Flask + Bootstrap / Vue 前端分离 
   - 实现商品展示、表单提交、分页与搜索 
 - **数据库设计**
   - MySQL 
+  - ORM 管理数据库实体
 - **测试与部署**
   - 单元测试：unittest / pytest 
   - 部署：Docker 
@@ -37,6 +37,7 @@
   - Thymeleaf 模板（单体项目）或 Vue + Axios（前后端分离）
 - **数据库设计**
   - MySQL 
+  - ORM 管理数据库实体
 - **测试与部署**
   - 单元测试：JUnit 5 + MockMVC 
   - 打包部署：`mvn package` → `java -jar shop.jar` 
