@@ -10,6 +10,7 @@
 | 商品模块（Product） | 商品增删改查、商品详情、分类、价格、搜索         |
 | 购物车模块（Cart）   | 添加、删除、修改购物车商品，结算购物车          |
 | 订单模块（Order）   | 下单、支付、订单状态（待支付、已发货、已完成）、订单历史 |
+| 公共模块（Common）  | 文件上传、异常处理、分页、统一响应格式          |
 
 ---
 
@@ -62,12 +63,21 @@
 | AdminController | 控制器 | -    | 商品审核、订单审核、用户管理 |
 | AdminService    | 服务类 | -    | 管理业务逻辑         |
 
+### 6. 公共模块
+
+| 类名 | 类型 | 功能 |
+|------|------|------|
+| FileUploadUtil | 工具类 | 文件上传处理 |
+| ResponseDTO | DTO | 统一响应格式 |
+| ExceptionHandler | 异常处理类 | 全局异常拦截 |
+
 ---
 
 ## 三、包图设计
 
 ```plantuml
 @startuml package_structure
+
 package "com.shop.controller" {
   class UserController
   class ProductController
@@ -111,7 +121,18 @@ package "com.shop.util" {
 package "com.shop.exception" {
   class GlobalExceptionHandler
 }
+
+' 定义包之间的依赖关系
+"com.shop.controller" --> "com.shop.service" : 调用服务层
+"com.shop.service" --> "com.shop.repository" : 调用仓库层
+"com.shop.service" --> "com.shop.model" : 使用实体类
+"com.shop.repository" --> "com.shop.model" : 映射数据库表
+"com.shop.controller" --> "com.shop.dto" : 使用 DTO
+"com.shop.controller" --> "com.shop.exception" : 异常处理
+"com.shop.controller" --> "com.shop.util" : 工具方法
+
 @enduml
+
 ```
 
 ## 四、 类图设计
