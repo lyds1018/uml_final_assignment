@@ -15,15 +15,15 @@
 ## 2. Python 技术需求
 - **后端开发**
   - 使用 Flask 构建 REST API 
-  - 使用 Flask Blueprint 模块化结构
+  - 使用 Flask Blueprint 模块化结构 
 - **前端展示**
   - Flask + Vue 前后端分离 
   - 实现商品展示、表单提交、分页与搜索 
 - **数据库设计**
   - MySQL 
-  - ORM 管理数据库实体
+  - ORM 管理数据库实体 
 - **部署运行**
-  - Docker 容器化
+  - Docker 容器化 
 
 ---
 
