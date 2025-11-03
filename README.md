@@ -4,37 +4,20 @@
 
 ## 运行方式（本地内网，无 Docker）
 
-1) 本地启动后端
+1) 本地启动后端（同时提供前端静态页）
 
-- 安装并启动 MySQL 8，本地创建数据库 `shopdb`，账号密码与 `backend/src/main/resources/application.yml` 保持一致（默认 root/root）。
+- 安装并启动 MySQL 8，本地创建数据库 `shopdb`，账号密码与 `backend/src/main/resources/application.yml` 保持一致
 - 进入 `backend` 目录，执行：
 
 ```bash
 mvn spring-boot:run
 ```
 
-2) 本地启动前端（开发模式）
+2) 前端访问
 
-```bash
-cd frontend
-npm install
-npm run dev
-```
+- 打开：`http://localhost:8080/`
 
-打开：`http://localhost:5173`（已代理 `/api` 到 `http://localhost:8080`）
-
-3) 本地预览构建产物
-
-```bash
-cd frontend
-npm install
-npm run build
-npm run preview
-```
-
-打开：`http://localhost:4173`
-
-更多详情见 `LOCAL_SETUP.md`。
+更多细节见 `LOCAL_SETUP.md`。
 
 ## 主要接口
 

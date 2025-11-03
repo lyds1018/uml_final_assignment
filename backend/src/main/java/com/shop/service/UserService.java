@@ -18,19 +18,15 @@ public class UserService {
         this.encoder = new BCryptPasswordEncoder(10);
     }
 
-    public User register(String username, String email, String rawPassword) {
-        if (!StringUtils.hasText(username) || !StringUtils.hasText(email) || !StringUtils.hasText(rawPassword)) {
-            throw new IllegalArgumentException("用户名、邮箱、密码均不能为空");
+    public User register(String username, String rawPassword) {
+        if (!StringUtils.hasText(username) || !StringUtils.hasText(rawPassword)) {
+            throw new IllegalArgumentException("用户名与密码不能为空");
         }
         if (userRepository.existsByUsername(username)) {
             throw new IllegalArgumentException("用户名已存在");
         }
-        if (userRepository.existsByEmail(email)) {
-            throw new IllegalArgumentException("邮箱已存在");
-        }
         User u = new User();
         u.setUsername(username);
-        u.setEmail(email);
         u.setPassword(encoder.encode(rawPassword));
         return userRepository.save(u);
     }

@@ -63,8 +63,7 @@
               "title": "java_plan ✅"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -223,8 +222,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "25f2a3cc036ace3d",
+  "active": "5aa1915cfa35c5bd",
   "lastOpenFiles": [
+    "summary_design.md",
+    "java_plan ✅.md",
+    "README.md~",
     "LOCAL_SETUP.md",
     "backend/target/classes/application.yml",
     "backend/target/classes/com/shop/service/UserService.class",
@@ -235,13 +237,10 @@
     "backend/target/classes/com/shop/repository/ProductRepository.class",
     "backend/target/classes/com/shop/repository/OrderRepository.class",
     "backend/target/classes/com/shop/repository/OrderItemRepository.class",
-    "backend/target/classes/com/shop/repository/CartRepository.class",
     "README.md",
     "PROJECT_OVERVIEW.md",
     "detailed_design.md",
-    "summary_design.md",
     "demand_analysis.md",
-    "java_plan ✅.md",
     "python_plan.md",
     "implementation_plan.md"
   ]

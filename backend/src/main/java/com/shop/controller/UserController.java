@@ -18,7 +18,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseDTO<User> register(@RequestBody Map<String, String> req) {
-        User u = userService.register(req.get("username"), req.get("email"), req.get("password"));
+        User u = userService.register(req.get("username"), req.get("password"));
         return ResponseDTO.ok(u);
     }
 
