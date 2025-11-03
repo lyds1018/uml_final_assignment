@@ -26,7 +26,7 @@
 
 ---
 
-## 三、时序图（PlantUML）—— 用户下单
+## 三、时序图 —— 用户下单
 
 ```plantuml
 @startuml
