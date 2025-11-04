@@ -1,10 +1,11 @@
 package com.shop.service;
 
-import com.shop.model.Product;
-import com.shop.repository.ProductRepository;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.shop.model.Product;
+import com.shop.repository.ProductRepository;
 
 @Service
 public class ProductService {
@@ -21,6 +22,13 @@ public class ProductService {
         return productRepository.save(p);
     }
     public void delete(Long id) { productRepository.deleteById(id); }
+
+    public List<Product> search(String query) {
+        if (query == null || query.trim().isEmpty()) {
+            return listAll();
+        }
+        return productRepository.findByNameContainingIgnoreCase(query.trim());
+    }
 }
 
 
