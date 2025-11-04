@@ -1,14 +1,15 @@
 package com.shop.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.shop.model.Cart;
 import com.shop.model.CartItem;
 import com.shop.model.Product;
 import com.shop.repository.CartItemRepository;
 import com.shop.repository.CartRepository;
 import com.shop.repository.ProductRepository;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class CartService {
@@ -32,7 +33,11 @@ public class CartService {
 
     public List<CartItem> getActiveCartItems(Long userId) {
         Cart cart = getOrCreateCart(userId);
-        return cartItemRepository.findByCartId(cart.getId());
+        List<CartItem> items = cartItemRepository.findByCartId(cart.getId());
+        for (CartItem item : items) {
+            item.setProduct(productRepository.findById(item.getProductId()).orElse(null));
+        }
+        return items;
     }
 
     public CartItem addItem(Long userId, Long productId, int quantity) {
