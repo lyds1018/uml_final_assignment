@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
+                "file": "design/detailed_design.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "README"
+              "title": "detailed_design"
             }
           }
         ]
@@ -182,23 +182,24 @@
   },
   "active": "8b5516f22ab321f6",
   "lastOpenFiles": [
-    "design/python_plan.md",
+    "frontend/vite.config.js.timestamp-1762245963480-a56d641e9ae79.mjs",
+    "frontend/node_modules/@esbuild/android-arm64",
+    "frontend/node_modules/@esbuild/android-arm",
+    "frontend/node_modules/@esbuild/win32-ia32",
+    "frontend/node_modules/@esbuild/win32-arm64",
+    "frontend/node_modules/fsevents",
+    "frontend/node_modules/@esbuild/sunos-x64",
+    "frontend/node_modules/@esbuild/openbsd-x64",
+    "frontend/node_modules/@esbuild/netbsd-x64",
+    "frontend/node_modules/@esbuild/linux-s390x",
+    "frontend/node_modules/@esbuild/linux-x64",
     "design/java_plan ✅.md",
-    "frontend/src/App.vue",
+    "README.md",
+    "design/python_plan.md",
     "design/detailed_design.md",
     "design/demand_analysis.md",
-    "frontend/src/main.js",
-    "design",
     "design/summary_design.md",
-    "README.md~",
     "LOCAL_SETUP.md",
-    "backend/target/classes/application.yml",
-    "backend/target/classes/com/shop/service/UserService.class",
-    "backend/target/classes/com/shop/service/ProductService.class",
-    "backend/target/classes/com/shop/service/OrderService.class",
-    "backend/target/classes/com/shop/service/CartService.class",
-    "backend/target/classes/com/shop/repository/UserRepository.class",
-    "README.md",
     "PROJECT_OVERVIEW.md",
     "implementation_plan.md"
   ]

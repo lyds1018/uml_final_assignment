@@ -9,9 +9,11 @@ import com.shop.model.CartItem;
 import com.shop.model.Order;
 import com.shop.model.OrderItem;
 import com.shop.model.Product;
+import com.shop.model.User;
 import com.shop.repository.OrderItemRepository;
 import com.shop.repository.OrderRepository;
 import com.shop.repository.ProductRepository;
+import com.shop.repository.UserRepository;
 
 @Service
 public class OrderService {
@@ -19,12 +21,14 @@ public class OrderService {
     private final OrderItemRepository orderItemRepository;
     private final CartService cartService;
     private final ProductRepository productRepository;
+    private final UserRepository userRepository;
 
-    public OrderService(OrderRepository orderRepository, OrderItemRepository orderItemRepository, CartService cartService, ProductRepository productRepository) {
+    public OrderService(OrderRepository orderRepository, OrderItemRepository orderItemRepository, CartService cartService, ProductRepository productRepository, UserRepository userRepository) {
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
         this.cartService = cartService;
         this.productRepository = productRepository;
+        this.userRepository = userRepository;
     }
 
     @Transactional
@@ -41,7 +45,7 @@ public class OrderService {
 
         Order order = new Order();
         order.setUserId(userId);
-        order.setStatus("Pending");
+    order.setStatus("PENDING");
         order.setTotalPrice(total);
         order = orderRepository.save(order);
 
@@ -62,7 +66,7 @@ public class OrderService {
     public void markPaidAndFulfillCart(Long orderId, Long userId) {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException("订单不存在"));
         if (!order.getUserId().equals(userId)) throw new IllegalArgumentException("无权操作该订单");
-        if (!"Pending".equals(order.getStatus())) throw new IllegalArgumentException("订单非待支付状态");
+    if (!"PENDING".equals(order.getStatus())) throw new IllegalArgumentException("订单非待支付状态");
 
         List<OrderItem> orderItems = orderItemRepository.findByOrderId(orderId);
         for (OrderItem item : orderItems) {
@@ -73,7 +77,7 @@ public class OrderService {
             productRepository.save(p);
         }
 
-        order.setStatus("Paid");
+    order.setStatus("PAID");
         orderRepository.save(order);
 
         cartService.clearCart(userId);
@@ -107,6 +111,21 @@ public class OrderService {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException("订单不存在"));
         order.setStatus(status);
         return orderRepository.save(order);
+    }
+
+    public List<Order> listAllOrders() {
+        List<Order> orders = orderRepository.findAll();
+        for (Order order : orders) {
+            List<OrderItem> items = orderItemRepository.findByOrderId(order.getId());
+            for (OrderItem item : items) {
+                Product product = productRepository.findById(item.getProductId()).orElse(null);
+                item.setProduct(product);
+            }
+            order.setItems(items);
+            User u = userRepository.findById(order.getUserId()).orElse(null);
+            order.setUser(u);
+        }
+        return orders;
     }
 }
 

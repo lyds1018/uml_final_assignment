@@ -4,19 +4,19 @@
       <h2>后台管理</h2>
       <nav>
         <button
-          @click="currentView = 'products'"
+          @click="setView('products')"
           :class="{ active: currentView === 'products' }"
         >
           商品管理
         </button>
         <button
-          @click="currentView = 'orders'"
+          @click="setView('orders')"
           :class="{ active: currentView === 'orders' }"
         >
           订单管理
         </button>
         <button
-          @click="currentView = 'users'"
+          @click="setView('users')"
           :class="{ active: currentView === 'users' }"
         >
           用户管理
@@ -66,7 +66,7 @@
           <tbody>
             <tr v-for="order in orders" :key="order.id">
               <td>{{ order.id }}</td>
-              <td>{{ order.user.username }}</td>
+              <td>{{ order.user ? order.user.username : '' }}</td>
               <td>¥{{ order.totalPrice }}</td>
               <td>{{ getStatusText(order.status) }}</td>
               <td>
@@ -165,6 +165,10 @@ export default {
     await this.fetchData()
   },
   methods: {
+    async setView(view) {
+      this.currentView = view
+      await this.fetchData()
+    },
     async fetchData() {
       switch (this.currentView) {
         case 'products':

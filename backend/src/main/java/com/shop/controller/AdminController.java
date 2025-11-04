@@ -1,29 +1,34 @@
 package com.shop.controller;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.shop.dto.ResponseDTO;
+import com.shop.model.Order;
 import com.shop.model.Product;
 import com.shop.model.User;
-import com.shop.model.Order;
-import com.shop.repository.OrderRepository;
 import com.shop.repository.UserRepository;
-import com.shop.service.ProductService;
 import com.shop.service.OrderService;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import com.shop.service.ProductService;
 
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
     private final ProductService productService;
     private final OrderService orderService;
-    private final OrderRepository orderRepository;
     private final UserRepository userRepository;
 
-    public AdminController(ProductService productService, OrderService orderService, OrderRepository orderRepository, UserRepository userRepository) {
+    public AdminController(ProductService productService, OrderService orderService, UserRepository userRepository) {
         this.productService = productService;
         this.orderService = orderService;
-        this.orderRepository = orderRepository;
         this.userRepository = userRepository;
     }
 
@@ -52,7 +57,7 @@ public class AdminController {
     // orders (admin view)
     @GetMapping("/orders")
     public ResponseDTO<List<Order>> listOrders() {
-        return ResponseDTO.ok(orderRepository.findAll());
+        return ResponseDTO.ok(orderService.listAllOrders());
     }
 
     @PostMapping("/orders/{orderId}/ship")
