@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "design/detailed_design.md",
+                "file": "PROJECT_ARCHITECTURE.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "detailed_design"
+              "title": "PROJECT_ARCHITECTURE"
             }
           }
         ]
@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 205.5
   },
   "right": {
     "id": "2101c63bbd707d60",
@@ -168,6 +168,9 @@
   },
   "active": "a5a66355fbe431d9",
   "lastOpenFiles": [
+    "README.md",
+    "PROJECT_ARCHITECTURE.md",
+    "design/detailed_design.md",
     "design/java_plan ✅.md"
   ]
 }

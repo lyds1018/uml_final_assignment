@@ -1,0 +1,4 @@
+.obsidian/
+.vscode/
+backend/target/
+frontend/node_modules/
