@@ -15,7 +15,6 @@
           </div>
           <div class="order-items">
             <div class="order-item" v-for="item in order.items" :key="item.id">
-              <img :src="item.product.image" :alt="item.product.name" />
               <div class="item-details">
                 <h4>{{ item.product.name }}</h4>
                 <p>数量：{{ item.quantity }}</p>

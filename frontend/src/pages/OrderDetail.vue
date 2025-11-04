@@ -13,7 +13,6 @@
       <div class="order-items">
         <h3>商品信息</h3>
         <div class="item" v-for="item in order.items" :key="item.id">
-          <img :src="item.product.image" :alt="item.product.name" />
           <div class="item-info">
             <h4>{{ item.product.name }}</h4>
             <p class="price">¥{{ item.product.price }}</p>

@@ -8,7 +8,6 @@
     <div v-else>
       <div class="cart-items">
         <div v-for="item in cartItems" :key="item.id" class="cart-item">
-          <img :src="item.product.image" :alt="item.product.name" />
           <div class="item-details">
             <h3>{{ item.product.name }}</h3>
             <p class="price">¥{{ item.product.price }}</p>
