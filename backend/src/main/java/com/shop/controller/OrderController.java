@@ -1,15 +1,23 @@
 package com.shop.controller;
 
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.shop.dto.ResponseDTO;
 import com.shop.model.Order;
 import com.shop.model.User;
 import com.shop.service.OrderService;
 import com.shop.service.UserService;
-import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -47,6 +55,12 @@ public class OrderController {
     public ResponseDTO<List<Order>> my(HttpServletRequest request) {
         Long userId = resolveCurrentUserId(request);
         return ResponseDTO.ok(orderService.listMyOrders(userId));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseDTO<Order> get(@PathVariable Long id, HttpServletRequest request) {
+        Long userId = resolveCurrentUserId(request);
+        return ResponseDTO.ok(orderService.getOrderById(id, userId));
     }
 
     @PutMapping("/{orderId}/status")

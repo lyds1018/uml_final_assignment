@@ -6,7 +6,7 @@
         <router-link to="/products">商品</router-link>
         <router-link to="/cart">购物车</router-link>
         <router-link to="/orders">我的订单</router-link>
-        <router-link to="/admin" v-if="isAdmin">后台管理</router-link>
+        <a href="#" @click.prevent="goAdmin">后台管理</a>
         <a href="#" @click.prevent="logout">退出登录</a>
       </div>
     </nav>
@@ -29,6 +29,14 @@ export default {
     }
   },
   methods: {
+    goAdmin() {
+      const role = localStorage.getItem('userRole')
+      if (role === 'ADMIN') {
+        this.$router.push('/admin')
+      } else {
+        alert('权限不足，需要管理员权限')
+      }
+    },
     logout() {
       localStorage.removeItem('token')
       localStorage.removeItem('userRole')

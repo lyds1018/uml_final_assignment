@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Admin from './pages/Admin.vue'
 import Cart from './pages/Cart.vue'
 import Login from './pages/Login.vue'
+import OrderDetail from './pages/OrderDetail.vue'
 import Orders from './pages/Orders.vue'
 import Products from './pages/Products.vue'
 import Register from './pages/Register.vue'
@@ -39,6 +40,12 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: '/orders/:id',
+    name: 'OrderDetail',
+    component: OrderDetail,
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/admin',
     name: 'Admin',
     component: Admin,
@@ -62,7 +69,8 @@ router.beforeEach((to, from, next) => {
     }
 
     if (to.matched.some(record => record.meta.requiresAdmin) && userRole !== 'ADMIN') {
-      next('/products')
+      alert('权限不足，需要管理员权限')
+      next(from.path) // 返回之前的页面
       return
     }
   }

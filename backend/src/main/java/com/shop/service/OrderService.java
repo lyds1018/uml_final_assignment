@@ -1,11 +1,17 @@
 package com.shop.service;
 
-import com.shop.model.*;
-import com.shop.repository.*;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.shop.model.CartItem;
+import com.shop.model.Order;
+import com.shop.model.OrderItem;
+import com.shop.model.Product;
+import com.shop.repository.OrderItemRepository;
+import com.shop.repository.OrderRepository;
+import com.shop.repository.ProductRepository;
 
 @Service
 public class OrderService {
@@ -75,6 +81,26 @@ public class OrderService {
 
     public List<Order> listMyOrders(Long userId) {
         return orderRepository.findByUserId(userId);
+    }
+
+    public Order getOrderById(Long id, Long userId) {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("订单不存在"));
+        
+        if (!order.getUserId().equals(userId)) {
+            throw new IllegalArgumentException("无权访问此订单");
+        }
+
+        // 加载订单项和相关的商品信息
+        List<OrderItem> items = orderItemRepository.findByOrderId(id);
+        for (OrderItem item : items) {
+            Product product = productRepository.findById(item.getProductId())
+                    .orElseThrow(() -> new IllegalArgumentException("商品不存在"));
+            item.setProduct(product);
+        }
+        order.setItems(items);
+
+        return order;
     }
 
     public Order updateStatus(Long orderId, String status) {
