@@ -38,13 +38,13 @@
 
 ### 3. 购物车模块
 
-| 类名 | 类型 | 主要属性 | 功能 |
-|------|------|-----------|------|
-| Cart | 实体类 | id, userId, List<CartItem> | 映射购物车 |
-| CartItem | 实体类 | id, productId, quantity | 购物车商品条目 |
-| CartController | 控制器 | - | 添加/删除/修改购物车商品 |
-| CartService | 服务类 | - | 购物车业务逻辑 |
-| CartRepository | 数据访问接口 | - | CRUD 操作 |
+| 类名             | 类型     | 主要属性                       | 功能            |
+| -------------- | ------ | -------------------------- | ------------- |
+| Cart           | 实体类    | id, userId, List<CartItem> | 映射购物车         |
+| CartItem       | 实体类    | id, productId, quantity    | 购物车商品条目       |
+| CartController | 控制器    | -                          | 添加/删除/修改购物车商品 |
+| CartService    | 服务类    | -                          | 购物车业务逻辑       |
+| CartRepository | 数据访问接口 | -                          | CRUD 操作       |
 
 ### 4. 订单模块
 
@@ -65,10 +65,9 @@
 
 ### 6. 公共模块
 
-| 类名 | 类型 | 功能 |
-|------|------|------|
-| FileUploadUtil | 工具类 | 文件上传处理 |
-| ResponseDTO | DTO | 统一响应格式 |
+| 类名               | 类型    | 功能     |
+| ---------------- | ----- | ------ |
+| ResponseDTO      | DTO   | 统一响应格式 |
 | ExceptionHandler | 异常处理类 | 全局异常拦截 |
 
 ---
@@ -98,7 +97,9 @@ package "com.shop.repository" {
   class UserRepository
   class ProductRepository
   class CartRepository
+  class CartItemRepository
   class OrderRepository
+  class OrderItemRepository
 }
 
 package "com.shop.model" {
@@ -112,10 +113,6 @@ package "com.shop.model" {
 
 package "com.shop.dto" {
   class ResponseDTO
-}
-
-package "com.shop.util" {
-  class FileUploadUtil
 }
 
 package "com.shop.exception" {

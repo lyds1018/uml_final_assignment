@@ -72,21 +72,12 @@ public class AdminController {
         return ResponseDTO.ok(userRepository.findAll());
     }
 
-    @PostMapping("/users/{userId}/toggle-status")
-    public ResponseDTO<Void> toggleUserStatus(@PathVariable Long userId) {
-        User u = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("用户不存在"));
-        // toggle a logical field 'enabled' if present; if not present, ignore
-        try {
-            java.lang.reflect.Field f = User.class.getDeclaredField("enabled");
-            f.setAccessible(true);
-            Boolean enabled = (Boolean) f.get(u);
-            f.set(u, enabled == null ? Boolean.FALSE : !enabled);
-            userRepository.save(u);
-        } catch (NoSuchFieldException ex) {
-            // 用户实体没有 enabled 字段，忽略切换
-        } catch (Exception ex) {
-            throw new RuntimeException("更新用户状态失败");
+    @DeleteMapping("/users/{userId}")
+    public ResponseDTO<Void> deleteUser(@PathVariable Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new RuntimeException("用户不存在");
         }
+        userRepository.deleteById(userId);
         return ResponseDTO.ok(null);
     }
 }

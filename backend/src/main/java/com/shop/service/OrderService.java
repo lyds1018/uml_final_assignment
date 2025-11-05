@@ -38,14 +38,14 @@ public class OrderService {
 
         double total = 0.0;
         for (CartItem it : items) {
-            Product p = productRepository.findById(it.getProductId()).orElseThrow(() -> new IllegalArgumentException("商品不存在"));
+            Product p = productRepository.findById(it.getProductId()).orElseThrow();
             if (p.getStock() < it.getQuantity()) throw new IllegalArgumentException("库存不足: " + p.getName());
             total += p.getPrice() * it.getQuantity();
         }
 
         Order order = new Order();
         order.setUserId(userId);
-    order.setStatus("PENDING");
+        order.setStatus("PENDING");
         order.setTotalPrice(total);
         order = orderRepository.save(order);
 
@@ -65,21 +65,35 @@ public class OrderService {
     @Transactional
     public void markPaidAndFulfillCart(Long orderId, Long userId) {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException("订单不存在"));
-        if (!order.getUserId().equals(userId)) throw new IllegalArgumentException("无权操作该订单");
-    if (!"PENDING".equals(order.getStatus())) throw new IllegalArgumentException("订单非待支付状态");
-
-        List<OrderItem> orderItems = orderItemRepository.findByOrderId(orderId);
-        for (OrderItem item : orderItems) {
-            Product p = productRepository.findById(item.getProductId()).orElseThrow();
-            int left = p.getStock() - item.getQuantity();
-            if (left < 0) throw new IllegalArgumentException("库存不足: " + p.getName());
-            p.setStock(left);
-            productRepository.save(p);
+        if (!order.getUserId().equals(userId)) {
+            throw new IllegalArgumentException("无权操作该订单");
+        }
+        if (!"PENDING".equals(order.getStatus())) {
+            throw new IllegalArgumentException("订单非待支付状态");
         }
 
-    order.setStatus("PAID");
+        List<OrderItem> orderItems = orderItemRepository.findByOrderId(orderId);
+
+        // 验证库存
+        for (OrderItem item : orderItems) {
+            Product product = productRepository.findById(item.getProductId()).orElseThrow();
+            if (product.getStock() < item.getQuantity()) {
+                throw new IllegalArgumentException(product.getName() + "库存不足");
+            }
+        }
+
+        // 更新库存
+        for (OrderItem item : orderItems) {
+            Product product = productRepository.findById(item.getProductId()).orElseThrow();
+            product.setStock(product.getStock() - item.getQuantity());
+            productRepository.save(product);
+        }
+
+        // 更新订单状态
+        order.setStatus("PAID");
         orderRepository.save(order);
 
+        // 清空购物车
         cartService.clearCart(userId);
     }
 
@@ -88,8 +102,7 @@ public class OrderService {
     }
 
     public Order getOrderById(Long id, Long userId) {
-        Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("订单不存在"));
+        Order order = orderRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("订单不存在"));
         
         if (!order.getUserId().equals(userId)) {
             throw new IllegalArgumentException("无权访问此订单");
@@ -98,8 +111,7 @@ public class OrderService {
         // 加载订单项和相关的商品信息
         List<OrderItem> items = orderItemRepository.findByOrderId(id);
         for (OrderItem item : items) {
-            Product product = productRepository.findById(item.getProductId())
-                    .orElseThrow(() -> new IllegalArgumentException("商品不存在"));
+            Product product = productRepository.findById(item.getProductId()).orElseThrow();
             item.setProduct(product);
         }
         order.setItems(items);

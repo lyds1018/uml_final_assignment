@@ -15,13 +15,25 @@
 
 ## 2. 包结构（`src/main/java/com/shop/`）：
 
-- `controller/`：RESTful API 层（如 `UserController`, `ProductController`, `CartController`, `OrderController`, `AdminController`）
+- `controller/`：RESTful API 层
 
-- `service/`：业务逻辑（例如 `UserService`, `ProductService`, `CartService`, `OrderService`）
+- `service/`：业务逻辑层
+
+- `repository/`：数据访问层
+
+```
+前端 (Vue) 
+   ↓ HTTP 请求 (JSON)
+Controller 层
+   ↓ 调用
+Service 层
+   ↓ 调用
+Repository 层 (JPA)
+   ↓
+数据库 (MySQL)
+```
 
 - `model/`：JPA 实体（`User`, `Product`, `Order`, `OrderItem`, `Cart`, `CartItem` 等）
-
-- `repository/`：Spring Data JPA 仓库接口（CRUD 与查询方法）
 
 - `config/`：Spring 配置类（如 CORS / MVC 拦截器注册等）
 
