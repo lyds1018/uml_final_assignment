@@ -10,7 +10,7 @@
     
 - **ORM**：通过 SQLAlchemy 管理数据库实体，实现对象化操作  
     
-- **部署环境**：通过 Docker 容器化运行，方便移植与部署  
+- **本地运行**
     
 
 ---
@@ -25,4 +25,4 @@
     
 4. **前后端联调**：通过 Axios 调用 Flask 接口  
     
-5. **Docker 部署**：编写 Dockerfile + docker-compose.yml  
+5. **本地运行**

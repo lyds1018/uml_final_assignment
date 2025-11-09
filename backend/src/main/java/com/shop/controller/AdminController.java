@@ -19,59 +19,74 @@ import com.shop.repository.UserRepository;
 import com.shop.service.OrderService;
 import com.shop.service.ProductService;
 
-@RestController
-@RequestMapping("/api/admin")
+@RestController                                    // 后台管理接口控制器
+@RequestMapping("/api/admin")                       // 管理端统一前缀
 public class AdminController {
-    private final ProductService productService;
-    private final OrderService orderService;
-    private final UserRepository userRepository;
+    private final ProductService productService;   // 商品管理服务
+    private final OrderService orderService;       // 订单管理服务
+    private final UserRepository userRepository;   // 用户直接查询/管理
 
-    public AdminController(ProductService productService, OrderService orderService, UserRepository userRepository) {
+    public AdminController(
+            ProductService productService,
+            OrderService orderService,
+            UserRepository userRepository
+    ) {
         this.productService = productService;
         this.orderService = orderService;
         this.userRepository = userRepository;
     }
 
-    // products
+    // ===================== 商品管理 =====================
+
+    // 查询所有商品（管理员视角）
     @GetMapping("/products")
     public ResponseDTO<List<Product>> listProducts() {
         return ResponseDTO.ok(productService.listAll());
     }
 
+    // 新增商品
     @PostMapping("/products")
     public ResponseDTO<Product> createProduct(@RequestBody Product p) {
         return ResponseDTO.ok(productService.create(p));
     }
 
+    // 更新商品
     @PutMapping("/products/{id}")
     public ResponseDTO<Product> updateProduct(@PathVariable Long id, @RequestBody Product p) {
         return ResponseDTO.ok(productService.update(id, p));
     }
 
+    // 删除商品
     @DeleteMapping("/products/{id}")
     public ResponseDTO<Void> deleteProduct(@PathVariable Long id) {
         productService.delete(id);
         return ResponseDTO.ok(null);
     }
 
-    // orders (admin view)
+    // ===================== 订单管理 =====================
+
+    // 查询所有订单（管理员视角）
     @GetMapping("/orders")
     public ResponseDTO<List<Order>> listOrders() {
         return ResponseDTO.ok(orderService.listAllOrders());
     }
 
+    // 管理员发货（将订单状态更新为 SHIPPING）
     @PostMapping("/orders/{orderId}/ship")
     public ResponseDTO<Void> shipOrder(@PathVariable Long orderId) {
         orderService.updateStatus(orderId, "SHIPPING");
         return ResponseDTO.ok(null);
     }
 
-    // users (admin view)
+    // ===================== 用户管理 =====================
+
+    // 查询所有用户
     @GetMapping("/users")
     public ResponseDTO<List<User>> listUsers() {
         return ResponseDTO.ok(userRepository.findAll());
     }
 
+    // 删除用户
     @DeleteMapping("/users/{userId}")
     public ResponseDTO<Void> deleteUser(@PathVariable Long userId) {
         if (!userRepository.existsById(userId)) {
@@ -81,3 +96,4 @@ public class AdminController {
         return ResponseDTO.ok(null);
     }
 }
+
