@@ -71,10 +71,20 @@ public class OrderController {
         return ResponseDTO.ok(orderService.getOrderById(id, userId)); // service 内会检查权限
     }
 
-    // 更新订单状态
-    @PutMapping("/{orderId}/status")
-    public ResponseDTO<Order> updateStatus(@PathVariable Long orderId, @RequestBody Map<String, String> req) {
-        return ResponseDTO.ok(orderService.updateStatus(orderId, req.get("status")));
+    // 用户将订单标记为已完成
+    @PutMapping("/{orderId}/complete")
+    public ResponseDTO<Order> completeOrder(@PathVariable Long orderId) {
+        // 调用 service 将订单状态更新为 "COMPLETED"
+        Order updatedOrder = orderService.updateStatus(orderId, "COMPLETED");
+        return ResponseDTO.ok(updatedOrder);
+    }
+    
+    // 用户将订单标记为已取消
+    @PutMapping("/{orderId}/cancel")
+    public ResponseDTO<Order> cancelOrder(@PathVariable Long orderId) {
+        // 调用 service 将订单状态更新为 "CANCELLED"
+        Order updatedOrder = orderService.updateStatus(orderId, "CANCELLED");
+        return ResponseDTO.ok(updatedOrder);
     }
 }
 

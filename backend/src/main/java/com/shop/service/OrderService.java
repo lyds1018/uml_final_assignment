@@ -143,7 +143,7 @@ public class OrderService {
         return order;
     }
 
-    // 更新订单状态（例如：管理员更新为 shipped、canceled 等）
+    // 更新订单状态（管理员和用户共用）
     public Order updateStatus(Long orderId, String status) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("订单不存在"));

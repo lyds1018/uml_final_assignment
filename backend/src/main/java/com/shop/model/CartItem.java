@@ -1,12 +1,10 @@
 package com.shop.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 
+/**
+ * 购物车项实体类
+ */
 @Entity
 public class CartItem {
     @Id
@@ -14,17 +12,18 @@ public class CartItem {
     private Long id;
 
     @Column(nullable = false)
-    private Long cartId;
+    private Long cartId; // 所属购物车 ID
 
     @Column(nullable = false)
-    private Long productId;
+    private Long productId; // 商品 ID
 
     @Column(nullable = false)
-    private Integer quantity;
+    private Integer quantity; // 数量
 
     @Transient
-    private Product product;
+    private Product product; // 商品信息（非数据库字段）
 
+    // getter & setter
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public Long getCartId() { return cartId; }
@@ -36,5 +35,3 @@ public class CartItem {
     public Product getProduct() { return product; }
     public void setProduct(Product product) { this.product = product; }
 }
-
-
