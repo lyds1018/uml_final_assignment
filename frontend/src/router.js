@@ -17,42 +17,44 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: Login,
+    meta: { showNavbar: false } // 登录页不显示导航栏
   },
   {
     path: '/register',
     name: 'Register',
-    component: Register
+    component: Register,
+    meta: { showNavbar: false } // 注册页也不显示导航栏
   },
   {
     path: '/products',
     name: 'Products',
     component: Products,
-    meta: { requiresAuth: true } // 强制登录
+    meta: { requiresAuth: true, showNavbar: true }
   },
   {
     path: '/cart',
     name: 'Cart',
     component: Cart,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, showNavbar: true }
   },
   {
     path: '/orders',
     name: 'Orders',
     component: Orders,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, showNavbar: true }
   },
   {
     path: '/orders/:id',
     name: 'OrderDetail',
     component: OrderDetail,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, showNavbar: true }
   },
   {
     path: '/admin',
     name: 'Admin',
     component: Admin,
-    meta: { requiresAuth: true, requiresAdmin: true }
+    meta: { requiresAuth: true, requiresAdmin: true, showNavbar: true }
   }
 ]
 

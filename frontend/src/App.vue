@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <!-- 顶部导航栏，仅在登录状态下显示 -->
-    <nav class="navbar" v-if="isLoggedIn">
+    <!-- 顶部导航栏，仅在登录状态且当前路由允许显示时显示 -->
+    <nav class="navbar" v-if="isLoggedIn && $route.meta.showNavbar !== false">
       <div class="nav-brand">在线商城</div>
       <div class="nav-links">
         <router-link to="/products">商品</router-link>
@@ -14,7 +14,7 @@
 
     <!-- 主体内容 -->
     <main class="app-container">
-      <router-view :token="token" :userRole="userRole" />
+      <router-view :token="token" :userRole="userRole" @login-success="setLogin" />
     </main>
   </div>
 </template>
@@ -40,6 +40,11 @@ export default {
     // 页面加载时从 localStorage 初始化登录状态
     this.token = localStorage.getItem('token')
     this.userRole = localStorage.getItem('userRole')
+
+    // 如果 token 不存在且不是登录页/注册页，自动跳回登录页
+    if (!this.token && !['/login', '/register'].includes(this.$route.path)) {
+      this.$router.replace('/login')
+    }
   },
   methods: {
     goAdmin() {
@@ -52,7 +57,6 @@ export default {
     logout() {
       this.token = null
       this.userRole = null
-      // 清空 localStorage
       localStorage.removeItem('token')
       localStorage.removeItem('userRole')
       this.$router.push('/login')
@@ -60,9 +64,9 @@ export default {
     setLogin(token, role) {
       this.token = token
       this.userRole = role
-      // 同步到 localStorage
       localStorage.setItem('token', token)
       localStorage.setItem('userRole', role)
+      this.$router.push('/products') // 登录成功后跳转到商品页
     }
   }
 }
@@ -94,3 +98,4 @@ export default {
   min-height: calc(100vh - 60px);
 }
 </style>
+
