@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 
 export default {
   name: 'Login',
@@ -37,11 +37,10 @@ export default {
           password: this.password
         })
         if (response.data.success) {
-          // 存储token和用户信息（注意 ResponseDTO 的 data 字段包含实际数据）
           const payload = response.data.data || {}
-          localStorage.setItem('token', payload.token)
-          localStorage.setItem('userRole', payload.role)
-          // 根据角色跳转
+          // 调用父组件方法保存 token 和 role
+          this.$root.setLogin(payload.token, payload.role)
+
           if (payload.role === 'ADMIN') {
             this.$router.push('/admin')
           } else {
@@ -64,44 +63,14 @@ export default {
   border: 1px solid #ddd;
   border-radius: 5px;
 }
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-input {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
+.form-group { margin-bottom: 15px; }
+label { display: block; margin-bottom: 5px; }
+input { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
 button {
-  width: 100%;
-  padding: 10px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  width: 100%; padding: 10px;
+  background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;
 }
-
-button:hover {
-  background-color: #45a049;
-}
-
-.register-link {
-  text-align: center;
-  margin-top: 10px;
-}
-
-a {
-  color: #4CAF50;
-  text-decoration: none;
-}
+button:hover { background-color: #45a049; }
+.register-link { text-align: center; margin-top: 10px; }
+a { color: #4CAF50; text-decoration: none; }
 </style>

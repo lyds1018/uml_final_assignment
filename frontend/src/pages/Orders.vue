@@ -1,6 +1,7 @@
 <template>
   <div class="orders-container">
     <h2>我的订单</h2>
+
     <div v-if="orders.length === 0" class="no-orders">
       <p>没有订单</p>
       <router-link to="/products" class="continue-shopping">去购物</router-link>
@@ -11,10 +12,11 @@
         <div v-for="order in orders" :key="order.id" class="order-card">
           <div class="order-header">
             <div>订单 #{{ order.id }}</div>
-            <div class="order-status">{{ getStatusText(order.status) }}</div>
+            <div class="order-status">{{ statusText(order.status) }}</div>
           </div>
+
           <div class="order-items">
-            <div class="order-item" v-for="item in order.items" :key="item.id">
+            <div v-for="item in order.items" :key="item.id" class="order-item">
               <div class="item-details">
                 <h4>{{ item.product.name }}</h4>
                 <p>数量：{{ item.quantity }}</p>
@@ -22,12 +24,21 @@
               </div>
             </div>
           </div>
+
           <div class="order-footer">
-            <div class="total-price">总计：¥{{ order.totalPrice }}</div>
+            <div class="total-price">总计：¥{{ totalPrice(order) }}</div>
             <div class="order-actions">
               <router-link :to="`/orders/${order.id}`">查看详情</router-link>
-              <button v-if="order.status === 'PENDING'" class="pay-button" @click="pay(order.id)">去支付</button>
-              <button v-if="order.status === 'SHIPPING'" class="confirm-button" @click="confirmReceive(order.id)">确认收货</button>
+              <button
+                v-if="order.status === 'PENDING'"
+                class="pay-button"
+                @click="payOrder(order.id)"
+              >去支付</button>
+              <button
+                v-if="order.status === 'SHIPPING'"
+                class="confirm-button"
+                @click="confirmReceive(order.id)"
+              >确认收货</button>
             </div>
           </div>
         </div>
@@ -37,7 +48,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 
 export default {
   name: 'Orders',
@@ -45,44 +56,60 @@ export default {
     return { orders: [] }
   },
   async created() {
-    await this.fetchOrders()
+    await this.loadOrders()
   },
   methods: {
-    async fetchOrders() {
+    async loadOrders() {
       try {
-        const response = await axios.get('/api/orders')
-        this.orders = response.data.data
-      } catch (error) {
-        alert('获取订单失败：' + error.message)
+        const res = await axios.get('/api/orders')
+        this.orders = res.data.data || []
+      } catch (err) {
+        alert('获取订单失败：' + (err.response?.data?.message || err.message))
       }
     },
-    getStatusText(status) {
-      const statusMap = {
-        'PENDING': '待支付',
-        'PAID': '已支付',
-        'SHIPPING': '已发货',
-        'COMPLETED': '已完成',
-        'CANCELLED': '已取消'
+
+    statusText(status) {
+      const map = {
+        PENDING: '待支付',
+        PAID: '已支付',
+        SHIPPING: '已发货',
+        COMPLETED: '已完成',
+        CANCELLED: '已取消'
       }
-      return statusMap[status] || status
+      return map[status] || status
     },
-    async pay(orderId) {
+
+    totalPrice(order) {
+      return order.items
+        .reduce((sum, item) => sum + item.product.price * item.quantity, 0)
+        .toFixed(2)
+    },
+
+    async payOrder(orderId) {
       try {
-        // 简化：调用后端支付接口
-        await axios.post(`/api/orders/${orderId}/pay`)
-        await this.fetchOrders()
-        alert('支付成功！')
-      } catch (error) {
-        alert('支付失败：' + error.message)
+        const res = await axios.post('/api/orders/pay', { orderId })
+        if (res.data.success) {
+          alert('支付成功！')
+          await this.loadOrders()
+        } else {
+          alert('支付失败：' + (res.data.message || '未知错误'))
+        }
+      } catch (err) {
+        alert('支付失败：' + (err.response?.data?.message || err.message))
       }
     },
+
     async confirmReceive(orderId) {
       try {
-        await axios.post(`/api/orders/${orderId}/receive`)
-        await this.fetchOrders()
-        alert('确认收货成功！')
-      } catch (error) {
-        alert('确认收货失败：' + error.message)
+        const res = await axios.put(`/api/orders/${orderId}/complete`)
+        if (res.data.success) {
+          alert('确认收货成功！')
+          await this.loadOrders()
+        } else {
+          alert('操作失败：' + (res.data.message || '未知错误'))
+        }
+      } catch (err) {
+        alert('操作失败：' + (err.response?.data?.message || err.message))
       }
     }
   }
@@ -147,13 +174,6 @@ export default {
 
 .order-item:last-child {
   border-bottom: none;
-}
-
-.order-item img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 4px;
 }
 
 .item-details h4 {

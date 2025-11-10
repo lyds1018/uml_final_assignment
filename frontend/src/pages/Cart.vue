@@ -1,29 +1,45 @@
 <template>
   <div class="cart-container">
     <h2>购物车</h2>
-    <div v-if="cartItems.length === 0" class="empty-cart">
+
+    <!-- 空购物车 -->
+    <div v-if="items.length === 0" class="empty-cart">
       <p>购物车是空的</p>
       <router-link to="/products" class="continue-shopping">继续购物</router-link>
     </div>
+
+    <!-- 有商品 -->
     <div v-else>
       <div class="cart-items">
-        <div v-for="item in cartItems" :key="item.id" class="cart-item">
+        <div v-for="item in items" :key="item.id" class="cart-item">
+
           <div class="item-details">
             <h3>{{ item.product.name }}</h3>
             <p class="price">¥{{ item.product.price }}</p>
           </div>
+
           <div class="quantity-controls">
-            <button @click="updateQuantity(item.id, item.quantity - 1)" :disabled="item.quantity <= 1">-</button>
+            <button
+              @click="changeQty(item, item.quantity - 1)"
+              :disabled="item.quantity <= 1"
+            >-</button>
+
             <span>{{ item.quantity }}</span>
-            <button @click="updateQuantity(item.id, item.quantity + 1)" :disabled="item.quantity >= item.product.stock">+</button>
+
+            <button
+              @click="changeQty(item, item.quantity + 1)"
+              :disabled="item.quantity >= item.product.stock"
+            >+</button>
           </div>
+
           <button class="remove-button" @click="removeItem(item.id)">删除</button>
         </div>
       </div>
+
       <div class="cart-summary">
         <div class="total">
           <span>总计：</span>
-          <span class="total-price">¥{{ totalPrice }}</span>
+          <span class="total-price">¥{{ total }}</span>
         </div>
         <button class="checkout-button" @click="checkout">结算</button>
       </div>
@@ -32,58 +48,64 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 
 export default {
   name: 'Cart',
+
   data() {
     return {
-      cartItems: []
+      items: []
     }
   },
+
   computed: {
-    totalPrice() {
-      return this.cartItems.reduce((total, item) => {
-        return total + (item.product.price * item.quantity)
-      }, 0).toFixed(2)
+    total() {
+      return this.items
+        .reduce((sum, i) => sum + i.product.price * i.quantity, 0)
+        .toFixed(2)
     }
   },
+
   async created() {
-    await this.fetchCartItems()
+    this.loadCart()
   },
+
   methods: {
-    async fetchCartItems() {
+    async loadCart() {
       try {
-        const response = await axios.get('/api/cart')
-        this.cartItems = response.data.data
-      } catch (error) {
-        alert('获取购物车信息失败：' + error.message)
+        const res = await axios.get('/api/cart')
+        this.items = res.data.data
+      } catch (err) {
+        alert('获取购物车失败：' + (err.response?.data?.message || err.message))
       }
     },
-    async updateQuantity(itemId, newQuantity) {
+
+    async changeQty(item, qty) {
       try {
-        await axios.put(`/api/cart/items/${itemId}`, {
-          quantity: newQuantity
-        })
-        await this.fetchCartItems()
-      } catch (error) {
-        alert('更新数量失败：' + error.message)
+        await axios.put(`/api/cart/items/${item.id}`, { quantity: qty })
+        this.loadCart()
+      } catch (err) {
+        alert('更新数量失败：' + (err.response?.data?.message || err.message))
       }
     },
-    async removeItem(itemId) {
+
+    async removeItem(id) {
+      if (!confirm('确定删除该商品吗？')) return
       try {
-        await axios.delete(`/api/cart/items/${itemId}`)
-        await this.fetchCartItems()
-      } catch (error) {
-        alert('删除商品失败：' + error.message)
+        await axios.delete(`/api/cart/items/${id}`)
+        this.loadCart()
+      } catch (err) {
+        alert('删除失败：' + (err.response?.data?.message || err.message))
       }
     },
+
     async checkout() {
       try {
-        const response = await axios.post('/api/orders/create')
-        this.$router.push(`/orders/${response.data.data.id}`)
-      } catch (error) {
-        alert('创建订单失败：' + error.message)
+        const res = await axios.post('/api/orders/create')
+        this.$router.push(`/orders/${res.data.data.id}`)
+      } catch (err) {
+        alert('创建订单失败：' + (err.response?.data?.message || err.message))
       }
     }
   }
@@ -106,7 +128,7 @@ export default {
   display: inline-block;
   padding: 10px 20px;
   background-color: #4CAF50;
-  color: white;
+  color: #fff;
   text-decoration: none;
   border-radius: 4px;
 }
@@ -117,18 +139,21 @@ export default {
 
 .cart-item {
   display: grid;
-  grid-template-columns: 100px 1fr auto auto;
+  grid-template-columns: 1fr auto auto;
   gap: 20px;
   align-items: center;
   padding: 15px;
   border-bottom: 1px solid #ddd;
 }
 
-.cart-item img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 4px;
+.item-details h3 {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.price {
+  color: #e53935;
+  font-weight: bold;
 }
 
 .quantity-controls {
@@ -152,7 +177,7 @@ export default {
 }
 
 .remove-button {
-  padding: 5px 10px;
+  padding: 6px 12px;
   background-color: #ff4444;
   color: white;
   border: none;

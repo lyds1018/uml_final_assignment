@@ -12,7 +12,7 @@
     </nav>
 
     <main class="app-container">
-      <router-view />
+      <router-view :token="token" :userRole="userRole" />
     </main>
   </div>
 </template>
@@ -20,27 +20,36 @@
 <script>
 export default {
   name: 'App',
+  data() {
+    return {
+      token: null,
+      userRole: null
+    }
+  },
   computed: {
     isLoggedIn() {
-      return !!localStorage.getItem('token')
+      return !!this.token
     },
     isAdmin() {
-      return localStorage.getItem('userRole') === 'ADMIN'
+      return this.userRole === 'ADMIN'
     }
   },
   methods: {
     goAdmin() {
-      const role = localStorage.getItem('userRole')
-      if (role === 'ADMIN') {
+      if (this.isAdmin) {
         this.$router.push('/admin')
       } else {
         alert('权限不足，需要管理员权限')
       }
     },
     logout() {
-      localStorage.removeItem('token')
-      localStorage.removeItem('userRole')
+      this.token = null
+      this.userRole = null
       this.$router.push('/login')
+    },
+    setLogin(token, role) {
+      this.token = token
+      this.userRole = role
     }
   }
 }

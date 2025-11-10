@@ -1,23 +1,24 @@
 <template>
   <div class="products-container">
+    <!-- 搜索栏 -->
     <div class="search-bar">
       <input
         type="text"
         v-model="searchQuery"
         placeholder="搜索商品..."
-        @input="searchProducts"
+        @input="debouncedSearch"
       />
     </div>
+
+    <!-- 商品列表 -->
     <div class="products-grid">
-      <div v-for="product in products" :key="product.id" class="product-card">
-  <h3>{{ product.name }}</h3>
-        <p class="price">¥{{ product.price }}</p>
-        <p class="stock">库存: {{ product.stock }}</p>
-        <button
-          @click="addToCart(product)"
-          :disabled="product.stock <= 0"
-        >
-          加入购物车
+      <div v-for="p in products" :key="p.id" class="product-card">
+        <h3>{{ p.name }}</h3>
+        <p class="price">¥{{ p.price }}</p>
+        <p class="stock">库存: {{ p.stock }}</p>
+
+        <button @click="addToCart(p)" :disabled="p.stock <= 0">
+          {{ p.stock > 0 ? '加入购物车' : '已售罄' }}
         </button>
       </div>
     </div>
@@ -25,45 +26,66 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 
 export default {
   name: 'Products',
+
   data() {
     return {
       products: [],
-      searchQuery: ''
+      searchQuery: '',
+      searchTimer: null
     }
   },
+
   async created() {
-    await this.fetchProducts()
+    this.fetchProducts()
   },
+
   methods: {
+    // 基础商品获取
     async fetchProducts() {
       try {
-        const response = await axios.get('/api/products')
-        this.products = response.data.data
-      } catch (error) {
-        alert('获取商品列表失败：' + error.message)
+        const res = await axios.get('/api/products')
+        this.products = res.data.data
+      } catch (err) {
+        alert('获取商品失败：' + (err.response?.data?.message || err.message))
       }
     },
+
+    // 关键字搜索 + 节流
+    debouncedSearch() {
+      clearTimeout(this.searchTimer)
+      this.searchTimer = setTimeout(() => {
+        this.searchProducts()
+      }, 400) // 防止输入过快频繁调用
+    },
+
     async searchProducts() {
+      if (!this.searchQuery) {
+        this.fetchProducts()
+        return
+      }
+
       try {
-        const response = await axios.get(`/api/products/search?query=${this.searchQuery}`)
-        this.products = response.data.data
-      } catch (error) {
-        alert('搜索商品失败：' + error.message)
+        const res = await axios.get(`/api/products/search?query=${this.searchQuery}`)
+        this.products = res.data.data
+      } catch (err) {
+        alert('搜索失败：' + (err.response?.data?.message || err.message))
       }
     },
-    async addToCart(product) {
+
+    // 加入购物车
+    async addToCart(p) {
       try {
         await axios.post('/api/cart/add', {
-          productId: product.id,
+          productId: p.id,
           quantity: 1
         })
-        alert('已添加到购物车！')
-      } catch (error) {
-        alert('添加到购物车失败：' + error.message)
+        alert('已加入购物车！')
+      } catch (err) {
+        alert('加入购物车失败：' + (err.response?.data?.message || err.message))
       }
     }
   }
@@ -97,19 +119,15 @@ export default {
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 15px;
+  background: #fff;
   text-align: center;
-}
-
-.product-card img {
-  width: 100%;
-  max-height: 200px;
-  object-fit: cover;
-  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .product-card h3 {
   margin: 10px 0;
   font-size: 1.2em;
+  font-weight: bold;
 }
 
 .price {
@@ -119,21 +137,22 @@ export default {
 }
 
 .stock {
-  color: #666;
-  margin: 5px 0;
+  color: #555;
+  margin: 6px 0;
 }
 
 button {
   background-color: #4CAF50;
-  color: white;
+  color: #fff;
   border: none;
   padding: 8px 15px;
   border-radius: 4px;
   cursor: pointer;
+  transition: 0.2s;
 }
 
 button:disabled {
-  background-color: #cccccc;
+  background-color: #aaa;
   cursor: not-allowed;
 }
 

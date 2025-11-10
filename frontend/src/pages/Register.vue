@@ -6,19 +6,19 @@
         <label>用户名：</label>
         <input type="text" v-model="username" required />
       </div>
-      <div class="form-group">
-        <label>邮箱：</label>
-        <input type="email" v-model="email" required />
-      </div>
+
       <div class="form-group">
         <label>密码：</label>
         <input type="password" v-model="password" required />
       </div>
+
       <div class="form-group">
         <label>确认密码：</label>
         <input type="password" v-model="confirmPassword" required />
       </div>
+
       <button type="submit">注册</button>
+
       <p class="login-link">
         已有账号？<router-link to="/login">立即登录</router-link>
       </p>
@@ -27,14 +27,13 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 
 export default {
   name: 'Register',
   data() {
     return {
       username: '',
-      email: '',
       password: '',
       confirmPassword: ''
     }
@@ -45,18 +44,21 @@ export default {
         alert('两次输入的密码不一致')
         return
       }
+
       try {
-        const response = await axios.post('/api/users/register', {
+        const res = await axios.post('/api/users/register', {
           username: this.username,
-          email: this.email,
           password: this.password
         })
-        if (response.data.success) {
+
+        if (res.data.success) {
           alert('注册成功！')
           this.$router.push('/login')
+        } else {
+          alert(res.data.message || '注册失败')
         }
-      } catch (error) {
-        alert('注册失败：' + error.message)
+      } catch (err) {
+        alert('注册失败：' + (err.response?.data?.message || err.message))
       }
     }
   }
@@ -70,6 +72,7 @@ export default {
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 5px;
+  background-color: #fff;
 }
 
 .form-group {
@@ -79,20 +82,22 @@ export default {
 label {
   display: block;
   margin-bottom: 5px;
+  font-weight: bold;
 }
 
 input {
   width: 100%;
   padding: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid #ccc;
   border-radius: 4px;
+  background-color: #fff;
 }
 
 button {
   width: 100%;
   padding: 10px;
   background-color: #4CAF50;
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -107,7 +112,7 @@ button:hover {
   margin-top: 10px;
 }
 
-a {
+.login-link a {
   color: #4CAF50;
   text-decoration: none;
 }
