@@ -82,7 +82,7 @@
 | ---- | ------------- |
 | 操作系统 | Windows       |
 | 浏览器  | Chrome / Edge |
-| 后端环境 | Java/Python          |
+| 后端环境 | Java          |
 | 数据库  | MySQL         |
 | 工具   | IntelliJ IDEA |
 
